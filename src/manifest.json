@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Threads 蝦皮分潤蟑螂剋星",
+  "version": "0.3.0",
+  "description": "一噴斃命 · ROACH OUT! 一鍵 BAM！清掉那些在自己貼文底下狂塞蝦皮聯盟連結的分潤蟑螂。",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.threads.net/*",
+    "https://www.threads.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.threads.net/*",
+        "https://www.threads.com/*"
+      ],
+      "js": ["injected.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.threads.net/*",
+        "https://www.threads.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Threads 蝦皮分潤蟑螂剋星"
+  }
+}

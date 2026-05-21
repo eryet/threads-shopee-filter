@@ -1,0 +1,93 @@
+/* When a post is marked, hide all of its original children — only the marker shows. */
+[data-tsf-hidden="1"].tsf-marked > *:not(.tsf-marker) {
+  display: none !important;
+}
+
+/* Marker: muted earthy card with an emoji icon — spray puff + belly-up roach. */
+.tsf-marker {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border: 1px solid #d4c5a8;
+  border-radius: 12px;
+  background: #f5efe6;
+  font: 500 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  color: #2a1a14;
+  min-height: 60px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.tsf-marker.tsf-marker-loose {
+  background: #f6f2e8;
+  border-color: #d6cab2;
+  border-style: dashed;
+}
+
+.tsf-marker-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1;
+  font-size: 26px;
+}
+
+.tsf-emoji-spray {
+  font-size: 20px;
+  opacity: 0.55;
+}
+
+.tsf-emoji-roach {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.tsf-marker-body {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.tsf-marker-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+  color: #2a1a14;
+}
+
+.tsf-marker-sub {
+  opacity: 0.6;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #2a1a14;
+}
+
+.tsf-show-btn {
+  appearance: none;
+  border: 1px solid #2a1a14;
+  background: transparent;
+  color: #2a1a14;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font: 600 12px/1 -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  cursor: pointer;
+  flex: none;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tsf-show-btn:hover {
+  background: #2a1a14;
+  color: #f5efe6;
+}
