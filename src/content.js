@@ -20,7 +20,7 @@
 
   const state = {
     enabled: true,
-    debug: true,
+    debug: false,
     dryRun: false,
     prefetch: true,
     looseMatch: true,
@@ -81,7 +81,7 @@
   chrome.storage.sync.get(
     {
       enabled: true,
-      debug: true,
+      debug: false,
       dryRun: false,
       prefetch: true,
       looseMatch: true,
@@ -94,6 +94,9 @@
       state.prefetch = v.prefetch !== false;
       state.looseMatch = v.looseMatch !== false;
       state.concurrency = clampConcurrency(v.concurrency);
+      // Mirror the debug toggle onto <html> so styles.css can gate the marker's
+      // reason line (the "why was this filtered" sub-text under the title).
+      document.documentElement.classList.toggle("tsf-debug", state.debug);
       log("loaded settings", {
         enabled: state.enabled,
         debug: state.debug,
@@ -116,6 +119,7 @@
     }
     if (changes.debug) {
       state.debug = changes.debug.newValue !== false;
+      document.documentElement.classList.toggle("tsf-debug", state.debug);
       console.log(
         "%c[TSF]",
         "color:#1f8a4c;font-weight:bold",

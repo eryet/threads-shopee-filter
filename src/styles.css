@@ -63,6 +63,9 @@
 }
 
 .tsf-marker-sub {
+  /* Hidden by default — only visible when the popup's Debug 日誌 toggle is on
+     (content.js mirrors state.debug as a `tsf-debug` class on <html>). */
+  display: none;
   opacity: 0.6;
   font-size: 12px;
   font-weight: 500;
@@ -70,6 +73,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   color: #2a1a14;
+}
+
+html.tsf-debug .tsf-marker-sub {
+  display: block;
 }
 
 .tsf-show-btn {

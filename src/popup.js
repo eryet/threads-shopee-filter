@@ -4,6 +4,7 @@ const looseMatchEl = document.getElementById("looseMatch");
 const concurrencyEl = document.getElementById("concurrency");
 const dryRunEl = document.getElementById("dryRun");
 const debugEl = document.getElementById("debug");
+const starfieldEl = document.getElementById("starfield");
 const statHidden = document.getElementById("statHidden");
 const statScan = document.getElementById("statScan");
 const statPrefetch = document.getElementById("statPrefetch");
@@ -15,18 +16,20 @@ const clearCacheBtn = document.getElementById("clearCache");
 chrome.storage.sync.get(
   {
     enabled: true,
-    debug: true,
+    debug: false,
     dryRun: false,
     prefetch: true,
     looseMatch: true,
     concurrency: 6,
+    starfield: false,
   },
   (v) => {
     enabledEl.checked = v.enabled !== false;
     prefetchEl.checked = v.prefetch !== false;
     looseMatchEl.checked = v.looseMatch !== false;
     dryRunEl.checked = !!v.dryRun;
-    debugEl.checked = v.debug !== false;
+    debugEl.checked = !!v.debug;
+    starfieldEl.checked = !!v.starfield;
     // Snap to nearest known value (popup has 3 fixed options; storage may have any int)
     const n = Number(v.concurrency) || 6;
     concurrencyEl.value = n <= 3 ? "2" : n >= 8 ? "10" : "6";
@@ -51,6 +54,9 @@ dryRunEl.addEventListener("change", () => {
 });
 debugEl.addEventListener("change", () => {
   chrome.storage.sync.set({ debug: debugEl.checked });
+});
+starfieldEl.addEventListener("change", () => {
+  chrome.storage.sync.set({ starfield: starfieldEl.checked });
 });
 
 async function getActiveTabId() {

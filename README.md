@@ -48,6 +48,16 @@ A `MutationObserver` plus a 1-second URL poll handles infinite-scroll and SPA na
 
 Filtering is feed-only. On a permalink page (`/@user/post/CODE`), markers are cleared so you can read the thread — and importantly, those posts are **not** added to the "user revealed" set, so navigating back to the feed re-applies their markers from the cache.
 
+## Easter egg
+
+Toggle **✨ Sachi 星空模式** in the popup, or type the **Konami code** (↑ ↑ ↓ ↓ ← → ← → B A) anywhere on a Threads tab — a starfield drifts across the page. The canvas uses `mix-blend-mode: lighten`, so stars only show through dark areas (gutters, sidebar, dark-theme background) and vanish over lighter post cards. Konami won't trigger while you're typing in a post / search box. State is stored in `chrome.storage.sync` so it follows you across tabs. Starfield adapted from [eryet/sachi-wallpaper](https://github.com/eryet/sachi-wallpaper).
+
+You can also toggle it from DevTools:
+
+```js
+__tsf_starfield.toggle()
+```
+
 ## Debug API
 
 Open DevTools (F12) → Console on a Threads tab:

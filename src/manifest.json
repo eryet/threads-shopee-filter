@@ -23,7 +23,7 @@
         "https://www.threads.net/*",
         "https://www.threads.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["content.js", "easter-egg.js"],
       "css": ["styles.css"],
       "run_at": "document_idle"
     }
