@@ -99,33 +99,34 @@
     rafId = requestAnimationFrame(frame);
   }
 
-  // Cut Threads' feed column out of the canvas. The clip-path is a viewport
-  // rectangle (outer) plus the column's rectangle (inner), both traced
-  // clockwise — with evenodd fill the inner cancels the outer in its area,
-  // leaving the canvas as a "frame" around the column. The canvas literally
-  // doesn't paint inside the column, so its lighten-blend can't reach the
-  // posts/images inside, regardless of any stacking-context constraints.
+  // Cut every Threads feed column out of the canvas. The clip-path is the
+  // viewport rectangle (outer) plus one rectangle per column (inner), all
+  // traced clockwise — with evenodd fill each inner rectangle cancels the
+  // outer in its area, so the canvas paints only as a frame around the
+  // columns. Since the canvas literally doesn't paint inside any column, its
+  // lighten-blend can't reach the posts/images inside, no matter how many
+  // columns are open or what stacking contexts their ancestors create.
   function updateMask() {
     if (!active || !canvas) return;
-    const col = document.querySelector(COLUMN_SELECTOR);
-    if (!col) {
-      canvas.style.clipPath = "";
-      return;
-    }
-    const r = col.getBoundingClientRect();
-    if (r.width <= 0 || r.height <= 0) {
-      canvas.style.clipPath = "";
-      return;
-    }
+    const cols = document.querySelectorAll(COLUMN_SELECTOR);
     const W = window.innerWidth;
     const H = window.innerHeight;
-    const path =
-      "M 0 0 L " + W + " 0 L " + W + " " + H + " L 0 " + H + " Z " +
-      "M " + r.left + " " + r.top +
-      " L " + r.right + " " + r.top +
-      " L " + r.right + " " + r.bottom +
-      " L " + r.left + " " + r.bottom + " Z";
-    canvas.style.clipPath = "path(evenodd, '" + path + "')";
+    let path =
+      "M 0 0 L " + W + " 0 L " + W + " " + H + " L 0 " + H + " Z";
+    let holes = 0;
+    for (const col of cols) {
+      const r = col.getBoundingClientRect();
+      if (r.width <= 0 || r.height <= 0) continue;
+      path +=
+        " M " + r.left + " " + r.top +
+        " L " + r.right + " " + r.top +
+        " L " + r.right + " " + r.bottom +
+        " L " + r.left + " " + r.bottom + " Z";
+      holes++;
+    }
+    canvas.style.clipPath = holes
+      ? "path(evenodd, '" + path + "')"
+      : "";
   }
 
   function install(silent) {
