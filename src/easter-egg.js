@@ -28,7 +28,12 @@
   let maskInterval = null;
   let active = false;
 
-  const COLUMN_SELECTOR = '[role="region"][aria-label="Column body"]';
+  // Feed columns are ARIA regions. Match on role alone, NOT
+  // aria-label="Column body": that label is localized by Threads (e.g.
+  // "直欄內文" on ?hl=zh-tw), so qualifying by the English text made the mask
+  // match zero columns on every non-English locale. role="region" is
+  // locale-independent and Threads only uses it for column bodies.
+  const COLUMN_SELECTOR = '[role="region"]';
 
   const rand = (a, b) => Math.random() * (b - a) + a;
 
